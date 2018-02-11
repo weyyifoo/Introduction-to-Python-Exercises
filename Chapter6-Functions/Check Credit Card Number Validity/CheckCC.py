@@ -4,7 +4,6 @@ Created on Sun Feb 11 12:31:25 2018
 
 @author: Wey Yi
 """
-
 # module for the first step where each integer is multipled by 2. if the result is greater than 10,
 # each integer is added together
 def multi2(u):
@@ -28,7 +27,19 @@ def sumup(s):
     cc3 = sum(s)
     return cc3
 
+def compcclist(t):
+    cclist = []
+    for n in range(16):
+        cclist.append(t % 10)
+        t //= 10
+    return cclist
+
 cc = int(input('Please enter Credit Card Number: '))
 cc2 = []
-multi2(cc)
-sumup(cc2)
+cc2 = multi2(cc)
+cc3 = sumup(cc2)
+cclist = compcclist(cc)
+
+checksum = sum(cclist[::2]) + cc3
+
+print(checksum)
