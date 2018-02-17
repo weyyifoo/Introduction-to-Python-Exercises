@@ -5,7 +5,7 @@ Created on Fri Feb 16 20:36:32 2018
 @author: Wey Yi
 """
 
-# solving kinematic equations
+# solving kinematic equation for a rocket pointing at an angle
 
 import math
 
@@ -17,16 +17,16 @@ class Rocket():
         self.vix = 0
         self.viy = 0
         self.t = 0
-        self.a = 0
+        self.ttop = 0
+        self.tbottom = 0
+        self.g = 9.81
         self.angle = 0
         
     def setangle(self):
         self.angle = math.radians(eval(input("at what angle from the horizontal is the cannon pointed at?: ")))
         
-        
     def setvi(self):
         self.vi = eval(input("Enter the initial speed of the project in m/s: "))
-
         
     def setvxvy(self):
         self.vix = math.cos(myrocket.angle)*myrocket.vi
@@ -34,7 +34,11 @@ class Rocket():
         
     def setx(self):
         self.x += 1
-    
+        
+    def time(self):
+        self.ttop = (myrocket.vi)/(myrocket.g)
+        self.tbottom = (2*myrocket.viy)/(myrocket.g)
+        self.t = self.ttop + self.tbottom
         
 myrocket = Rocket()
 
@@ -53,6 +57,8 @@ while True:
 
 # calculate vix and viy
 myrocket.setvxvy()
-print(myrocket.vix)
-print(myrocket.viy)
+print("X-velocity:", "%.2f" % myrocket.vix)
+print("Y-velocity:", "%.2f" % myrocket.viy)
 
+myrocket.time()
+print("Rocket flight time:", "%.2f" % myrocket.t)
