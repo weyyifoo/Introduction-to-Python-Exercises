@@ -8,6 +8,8 @@ Created on Fri Feb 16 20:36:32 2018
 # solving kinematic equation for a rocket pointing at an angle
 
 import math
+import numpy as np
+import matplotlib.pyplot as plt
 
 class Rocket():
     def __init__(self):
@@ -21,6 +23,7 @@ class Rocket():
         self.tbottom = 0
         self.g = 9.81
         self.angle = 0
+        self.distance = 0
         
     def setangle(self):
         self.angle = math.radians(eval(input("at what angle from the horizontal is the cannon pointed at?: ")))
@@ -40,11 +43,14 @@ class Rocket():
         self.tbottom = (2*myrocket.viy)/(myrocket.g)
         self.t = self.ttop + self.tbottom
         
+    def drange(self):
+        self.distance = ((2*(myrocket.vi)**2)*(math.sin((myrocket.angle)))*(math.cos((myrocket.angle))))/myrocket.g
+        
 myrocket = Rocket()
 
 # set angle of rocket
 myrocket.setangle()
-print("The angle of the cannon is now set to", math.degrees(myrocket.angle), "degrees from the horizontal")
+print("The angle of the cannon is now set to", "%.2f" % math.degrees(myrocket.angle), "degrees from the horizontal")
 # set initial velocity of rocket
 myrocket.setvi()
 
@@ -62,3 +68,19 @@ print("Y-velocity:", "%.2f" % myrocket.viy)
 
 myrocket.time()
 print("Rocket flight time:", "%.2f" % myrocket.t)
+
+myrocket.drange()
+print("The rocket will have a range of: ","%.2f" % myrocket.distance, "meters")
+
+xpath = np.arange(0, myrocket.distance, 0.01)
+timeincr = np.linspace(0, myrocket.t, len(xpath))
+
+ypath = []
+for i in range(len(timeincr)):
+    yh = myrocket.viy*timeincr[i] - (0.5)*myrocket.g*(timeincr[i]**2)
+    ypath.append(yh)
+    
+fig, ax = plt.subplots(1, 1)
+ax = plt.plot(xpath, ypath)
+
+plt.show
