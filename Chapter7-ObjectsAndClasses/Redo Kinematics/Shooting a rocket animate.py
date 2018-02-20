@@ -7,6 +7,8 @@ Created on Mon Feb 19 12:28:02 2018
 
 import math
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import animation
 
 class Rocket():
     def __init__(self, vi, theta):
@@ -15,7 +17,7 @@ class Rocket():
         self.vy = self
         self.theta = math.radians(theta)
         self.t = self
-        self.g = -10
+        self.g = -9.81
         self.x = self
         self.y = self
         self.d = self
@@ -47,25 +49,24 @@ print("vy is", "%.2f" % rocket1.vy)
 
 # panel setup for where the function will be plotted unto
 fig1 = plt.figure()
-ax = plt.axes(xlim = (0, 2), ylim = (-2, 2))
+ax = plt.axes(xlim = (0, rocket1.d), ylim = (0, rocket1.y))
 line, = ax.plot([], [], lw = 2)
 
 # initialization function: plotting the background of each frame
 def init():
     line.set_data([], [])
+    t1 = np.arange(0, rocket1.t, 0.1)
     return line,
 
 # define function and animate
 def animate(i):
-    t1 = np.linspace(0, rocket1.t, 0.1, endpoint = True)
-    x1 = 
-    y1 = 
-    line.set_data(x, y)
+    x1 = rocket1.vx * t1[i]
+    y1 = rocket1.vy * t1[i] - 0.5 * rocket1.g * (t[i])**2
+    line.set_data(x1, y1)
     return line,
 
 # call the animation.
 anim = animation.FuncAnimation(fig1, animate, init_func = init, 
-                               frames = 200, interval = 20,
+                               frames = 200, interval = 200,
                                blit = True)
-
 plt.show()
